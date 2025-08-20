@@ -1,4 +1,4 @@
-import { SearchLink } from './SearchLink';
+import { SearchLink } from './Loader/SearchLink';
 
 type Props = {
   query: string;
