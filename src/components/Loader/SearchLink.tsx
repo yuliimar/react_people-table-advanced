@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { getSearchWith, SearchParams } from '../utils/searchHelper';
+import { getSearchWith, SearchParams } from '../../utils/searchHelper';
 
 type Props = {
   children: React.ReactNode;
@@ -25,11 +25,13 @@ export const SearchLink: React.FC<Props> = ({
     }
   };
 
-  const searchString = getSearchWith(searchParams, params);
-  const to = searchString ? `#/people?${searchString}` : '#/people';
-
   return (
-    <Link to={to} className={className} onClick={handleClick} data-cy={dataCy}>
+    <Link
+      to={{ search: getSearchWith(searchParams, params) }}
+      className={className}
+      onClick={handleClick}
+      data-cy={dataCy}
+    >
       {children}
     </Link>
   );
