@@ -13,6 +13,14 @@ export const Navbar = () => {
     return location.pathname === path ? 'has-background-grey-lighter' : '';
   };
 
+  const getPeopleLink = () => {
+    if (location.pathname.startsWith('/people')) {
+      return `/people${location.search}`;
+    }
+
+    return '/people';
+  };
+
   return (
     <nav className="navbar is-light" data-cy="nav">
       <div className="container">
@@ -23,7 +31,10 @@ export const Navbar = () => {
         </div>
         <div className="navbar-menu">
           <div className="navbar-start">
-            <Link className={`navbar-item ${isActive('/people')}`} to="/people">
+            <Link
+              className={`navbar-item ${isActive('/people')}`}
+              to={getPeopleLink()}
+            >
               People
             </Link>
           </div>

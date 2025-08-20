@@ -1,4 +1,4 @@
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import { Person } from '../types/Person';
 
@@ -17,8 +17,7 @@ export const PeopleTable = ({
   onSortChange,
   selectedSlug,
 }: Props) => {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const location = useLocation();
 
   const peopleByName = useMemo(() => {
     const dict: { [key: string]: Person } = {};
@@ -29,11 +28,6 @@ export const PeopleTable = ({
 
     return dict;
   }, [people]);
-
-  const handlePersonClick = (e: React.MouseEvent, slug: string) => {
-    e.preventDefault();
-    navigate(`/people/${slug}?${searchParams.toString()}`);
-  };
 
   const findPerson = (name: string | null) => {
     if (!name || name.trim() === '' || name === '-') {
@@ -110,40 +104,37 @@ export const PeopleTable = ({
                 }
               >
                 <td>
-                  <a
-                    href={`#/people/${person.slug}`}
+                  <Link
+                    to={`/people/${person.slug}${location.search}`}
                     className={person.sex === 'f' ? 'has-text-danger' : ''}
-                    onClick={e => handlePersonClick(e, person.slug)}
                     data-cy="person-link"
                   >
                     {person.name}
-                  </a>
+                  </Link>
                 </td>
                 <td>{person.sex}</td>
                 <td>{person.born}</td>
                 <td>{person.died}</td>
                 <td>
                   {mother ? (
-                    <a
-                      href={`#/people/${mother.slug}`}
+                    <Link
+                      to={`/people/${mother.slug}${location.search}`}
                       className={mother.sex === 'f' ? 'has-text-danger' : ''}
-                      onClick={e => handlePersonClick(e, mother.slug)}
                     >
                       {mother.name}
-                    </a>
+                    </Link>
                   ) : (
                     person.motherName || '-'
                   )}
                 </td>
                 <td>
                   {father ? (
-                    <a
-                      href={`#/people/${father.slug}`}
+                    <Link
+                      to={`/people/${father.slug}${location.search}`}
                       className={father.sex === 'f' ? 'has-text-danger' : ''}
-                      onClick={e => handlePersonClick(e, father.slug)}
                     >
                       {father.name}
-                    </a>
+                    </Link>
                   ) : (
                     person.fatherName || '-'
                   )}

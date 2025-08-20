@@ -25,13 +25,11 @@ export const SearchLink: React.FC<Props> = ({
     }
   };
 
+  const searchString = getSearchWith(searchParams, params);
+  const to = searchString ? `/people?${searchString}` : '/people';
+
   return (
-    <Link
-      to={{ search: getSearchWith(searchParams, params) }}
-      className={className}
-      onClick={handleClick}
-      data-cy={dataCy}
-    >
+    <Link to={to} className={className} onClick={handleClick} data-cy={dataCy}>
       {children}
     </Link>
   );
